@@ -1,8 +1,22 @@
 import prisma from "../lib/prisma.js";
-
+import jwt from "jsonwebtoken";
 export const getPosts = async (req, res) => {
+  const query = req.query;
+  console.log(query);
+
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      where: {
+        city: query.city || undefined,
+        type: query.type || undefined,
+        property: query.property || undefined,
+        bedroom: parseInt(query.bedroom) || undefined,
+        price: {
+          gte: parseInt(query.minPrice) || 0,
+          lte: parseInt(query.maxPrice) || 999999999,
+        },
+      },
+    });
     res.status(200).json(posts);
   } catch (err) {
     console.log(err);
@@ -15,9 +29,41 @@ export const getPost = async (req, res) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id },
+      include: {
+        postDetail: true,
+        user: {
+          select: {
+            username: true,
+            avatar: true,
+          },
+        },
+      },
+    });
+    // verifying whether the user is logged in or not on the website
+    let userId;
+    const token = req.cookies?.token;
+    if (!token) {
+      userId = null;
+    } else {
+      jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
+        if (err) {
+          userId = null;
+        } else {
+          userId = payload.id;
+        }
+      });
+    }
+    //Fetching whether the post is saved or not
+    const saved = await prisma.savedPost.findUnique({
+      where: {
+        userId_postId: {
+          postId: id,
+          userId,
+        },
+      },
     });
 
-    res.status(200).json(post);
+    res.status(200).json({ ...post, isSaved: saved ? true : false });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "failed to get post!" });
@@ -30,8 +76,11 @@ export const addPost = async (req, res) => {
   try {
     const newPost = await prisma.post.create({
       data: {
-        ...body,
+        ...body.postData,
         userId,
+        postDetail: {
+          create: body.postDetails,
+        },
       },
     });
     res.status(200).json(newPost);

@@ -15,42 +15,73 @@ datasource db {
 
 //userSchema
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  username  String   @unique
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  email     String      @unique
+  username  String      @unique
   password  String
   avatar    String?
-  createdAt DateTime @default(now())
-  posts Post[]
+  createdAt DateTime    @default(now())
+  posts     Post[]
+  SavedPost SavedPost[]
 }
+
 //post model
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  price     Int
-  img       String
-  address String
-  city String
-  bedroom Int
-  bathroom Int
-  latitude String
-  longitude String
-  type Type
-  property Property
-  createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  price      Int
+  images     String[]
+  address    String
+  city       String
+  bedroom    Int
+  bathroom   Int
+  latitude   String
+  longitude  String
+  type       Type
+  property   Property
+  createdAt  DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String      @db.ObjectId
+  postDetail PostDetail?
+  SavedPost  SavedPost[]
 }
 
-enum Type{
+enum Type {
   buy
   rent
 }
 
-enum Property{
+enum Property {
   apartment
   house
   condo
   land
+}
+
+//postDetails model
+
+model PostDetail {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  desc       String?
+  utilities  String?
+  pet        String?
+  income     String?
+  size       Int?
+  school     Int?
+  bus        Int?
+  restaurant Int?
+  post       Post    @relation(fields: [postId], references: [id])
+  postId     String  @unique @db.ObjectId
+}
+
+model SavedPost {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    String   @unique @db.ObjectId
+  postId    String   @unique @db.ObjectId
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
 }
