@@ -13,18 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//userSchema
-model User {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  email     String      @unique
-  username  String      @unique
-  password  String
-  avatar    String?
-  createdAt DateTime    @default(now())
-  posts     Post[]
-  SavedPost SavedPost[]
-}
-
 //post model
 
 model Post {
@@ -84,4 +72,37 @@ model SavedPost {
   createdAt DateTime @default(now())
 
   @@unique([userId, postId])
+}
+
+//userSchema
+model User {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  email     String      @unique
+  username  String      @unique
+  password  String
+  avatar    String?
+  createdAt DateTime    @default(now())
+  posts     Post[]
+  SavedPost SavedPost[]
+  chats     Chat[]      @relation(fields: [chatIDs], references: [id])
+  chatIDs   String[]    @db.ObjectId
+}
+
+//Chat Schema...
+model Chat {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  users       User[]    @relation(fields: [userIDs], references: [id])
+  userIDs     String[]  @db.ObjectId
+  createdAt   DateTime  @default(now())
+  seenBy      String[]  @db.ObjectId
+  messages    Message[]
+  lastMessage String?
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String   @db.ObjectId
+  createdAt DateTime @default(now())
 }
