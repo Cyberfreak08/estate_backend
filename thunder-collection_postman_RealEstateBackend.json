@@ -1,0 +1,301 @@
+{
+    "info": {
+        "_postman_id": "ff17c8c5-7321-4dfb-aec3-354576e4df2e",
+        "name": "RealEstateBackend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "register",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:8800/api/auth/register",
+                            "path": [
+                                "api",
+                                "auth",
+                                "register"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8800"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"username\":\"hari\",\n  \"email\":\"hari123@gmail.com\",\n  \"password\":\"Hari2001\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/auth/login",
+                            "path": [
+                                "login"
+                            ],
+                            "host": [
+                                "auth"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"username\":\"Harisundar\",\n  \"password\":\"Hari@2001\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "logout",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/auth/logout",
+                            "path": [
+                                "logout"
+                            ],
+                            "host": [
+                                "auth"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Test",
+            "item": [
+                {
+                    "name": "Protected Route Test",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/test/should-be-logged-in",
+                            "path": [
+                                "should-be-logged-in"
+                            ],
+                            "host": [
+                                "test"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "getUsers",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/user",
+                            "host": [
+                                "user"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "getUser",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/user/6742fc2f00598f3fb12b0fd5",
+                            "path": [
+                                "6742fc2f00598f3fb12b0fd5"
+                            ],
+                            "host": [
+                                "user"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "updateUser",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "/user/6742fc2f00598f3fb12b0fd5",
+                            "path": [
+                                "6742fc2f00598f3fb12b0fd5"
+                            ],
+                            "host": [
+                                "user"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"username\": \"Hari\",\n  \"email\":\"hari123@gmail.com\",\n  \"password\":\"Hari@2001\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Posts",
+            "item": [
+                {
+                    "name": "getPosts",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/posts",
+                            "host": [
+                                "posts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "getPost",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/posts/67cbe20c8c7e6ac763473680",
+                            "path": [
+                                "67cbe20c8c7e6ac763473680"
+                            ],
+                            "host": [
+                                "posts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "addPost",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/posts",
+                            "host": [
+                                "posts"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"postData\": {\n    \"title\": \"Title2\",\n    \"price\": 111,\n    \"images\": [\n      \"https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2\",\n      \"https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2\",\n      \"https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2\",\n      \"https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2\",\n      \"https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2\"\n    ],\n    \"address\": \"Address1\",\n    \"city\": \"City1\",\n    \"bedroom\": 11,\n    \"bathroom\": 111,\n    \"type\": \"rent\",\n    \"property\": \"apartment\",\n    \"latitude\": \"51.5074\",\n    \"longitude\": \"-0.1278\"\n  },\n  \"postDetail\": {\n    \"desc\": \"Desc 1\",\n    \"utilities\": \"Owner is responsible\",\n    \"pet\": \"Allowed\",\n    \"income\": \"3x income\",\n    \"size\": 88,\n    \"school\": 1200,\n    \"bus\": 800,\n    \"restaurant\": 1500\n  }\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "updatePost",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "/posts/123",
+                            "path": [
+                                "123"
+                            ],
+                            "host": [
+                                "posts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "deletePost",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "/posts/67ca996b5a6574cd6a9f43b6",
+                            "path": [
+                                "67ca996b5a6574cd6a9f43b6"
+                            ],
+                            "host": [
+                                "posts"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Chats",
+            "item": [
+                {
+                    "name": "Get Chats",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/chats",
+                            "host": [
+                                "chats"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Chat",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "/chat/read/:id",
+                            "path": [
+                                "read",
+                                ":id"
+                            ],
+                            "host": [
+                                "chat"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Chat",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/chats",
+                            "host": [
+                                "chats"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Read Chat",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/chats",
+                            "host": [
+                                "chats"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Messages",
+            "item": []
+        }
+    ]
+}
