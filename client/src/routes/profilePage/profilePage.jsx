@@ -54,8 +54,7 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error Loading Posts!</p>}
             >
-              {(postResponse) =><List posts = {postResponse.data.userPosts}/>
-              }
+              {(postResponse) => <List posts={postResponse.data.userPosts} />}
             </Await>
           </Suspense>
           <div className="title">
@@ -66,15 +65,21 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error Loading Posts!</p>}
             >
-              {(postResponse) =><List posts = {postResponse.data.savedPosts}/>
-              }
+              {(postResponse) => <List posts={postResponse.data.savedPosts} />}
             </Await>
           </Suspense>
         </div>
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat />
+          <Suspense fallback={<p>Loading ...!</p>}>
+            <Await
+              resolve={data.chatResponse}
+              errorElement={<p>Error Loading Chats!</p>}
+            >
+              {(chatResponse) => <Chat chats={chatResponse.data} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>
